@@ -1,42 +1,44 @@
 ---
 title: "Azure Subscription Factory"
-subtitle: "Terraform automation with a controlled GitLab CI/CD approval workflow"
-description: "Automated Azure subscription provisioning with YAML requests, Terraform, GitLab CI, MCA billing scopes, Management Groups and an explicit approval gate."
+subtitle: "Governed Azure subscription provisioning with Terraform and GitLab CI/CD"
+description: "Built a YAML-driven Azure Subscription Factory using Terraform azurerm_subscription, MCA billing scopes, Management Groups and GitLab validate/plan/manual approval/apply stages."
 order: 3
 color: "sky"
 facts:
-  - { label: "Context", value: "Cloud / DevOps internship work — PCP, 2026" }
-  - { label: "Focus", value: "Azure provisioning and infrastructure governance" }
-  - { label: "Stack", value: "Azure, Terraform, GitLab CI/CD, YAML, service principal authentication" }
-  - { label: "Publishing", value: "Architecture summary only; no internal repository or confidential configuration shared" }
+  - { label: "Focus", value: "Azure infrastructure automation and governance" }
+  - { label: "Provisioning model", value: "Dashboard request → YAML → Terraform module" }
+  - { label: "Approval workflow", value: "Validate → plan → manual approval → apply" }
+  - { label: "Source", value: "Architecture-level case study; no internal configuration published" }
 next: "cloud-policy-guardrails"
 ---
 
-During my cloud/DevOps internship work, I helped automate the **controlled creation of Azure subscriptions** through an infrastructure-as-code workflow that preserves a human review step before applying changes.
+**I built a controlled Azure subscription provisioning workflow** that turns structured requests into **reviewable Infrastructure-as-Code changes**. Rather than manually creating and placing each subscription, the workflow connects an internal request process to **Terraform and GitLab CI/CD**, while preserving the required **billing and Management Group associations** and a deliberate approval step before applying changes.
 
-![Conceptual overview of a YAML request, GitLab plan, manual approval and Terraform subscription creation](/images/azure-factory.png)
+[![Detailed Azure Subscription Factory architecture with YAML requests, GitLab CI, Terraform and Azure billing and management hierarchy](/images/azure-factory.svg)](/images/azure-factory.svg)
 
-*Conceptual illustration of the workflow; internal dashboard images and infrastructure details are intentionally omitted.*
+*Architecture illustration of the provisioning workflow. Click to inspect the full-size diagram. The drawing is illustrative, not an internal system screenshot.*
 
-## Request to Terraform
+## 1. Connecting subscription requests to Terraform
 
-A subscription request enters through an **internal dashboard** and is persisted as **YAML**. A GitLab CI/CD pipeline reads the request and passes the required parameters into a **dedicated Terraform module using `azurerm_subscription`**.
+Requests submitted through an **internal dashboard** are persisted as **YAML**. I implemented the flow that passes those request parameters through **GitLab CI/CD** to a **dedicated Terraform module based on `azurerm_subscription`**.
 
-The Terraform configuration creates the subscription under the appropriate **Microsoft Customer Agreement (MCA) billing scope** and associates it with its target **Azure Management Group**.
+The module provisions a subscription under the appropriate **Microsoft Customer Agreement (MCA) billing scope** and associates it with the requested **Azure Management Group**. Both are important: billing scope determines the financial context, while Management Group placement determines where the subscription fits in the Azure governance hierarchy.
 
-## Approval-oriented delivery
+## 2. Implementing reviewable, controlled provisioning
 
-The pipeline implements the sequence:
+I used **GitLab CI/CD** to orchestrate the provisioning lifecycle:
 
-1. **Validate:** verify the Terraform configuration.
-2. **Plan:** prepare and expose the proposed infrastructure changes for review.
-3. **Manual approval:** require an explicit action before provisioning.
-4. **Apply:** execute the previously reviewed changes with **service-principal authentication**.
+1. **Validate** the Terraform configuration.
+2. **Plan** the proposed infrastructure changes and expose them for review.
+3. **Wait for manual approval** before applying the plan.
+4. **Apply** the reviewed change using **service-principal authentication**.
 
-## Why it matters
+**The workflow does not auto-apply subscriptions just because a YAML request exists.** The manual gate is an intentional part of the design.
 
-A subscription is not just an Azure resource—it belongs to a billing scope and a governance hierarchy. Automating its creation while retaining a **reviewable plan and an approval gate** helps standardize a repetitive administrative workflow.
+## What I contributed
 
-## Scope and confidentiality
+I connected **declarative YAML requests, a dedicated Terraform provisioning module and approval-oriented GitLab automation** into a repeatable subscription-creation process. The result demonstrates practical **Infrastructure as Code, Azure governance and controlled cloud automation**, without claiming an unverified scale or speedup.
 
-This page summarizes my implementation at the architectural level. It does not expose organization-specific billing identifiers, credentials, internal dashboard source code or tenant configuration.
+## Confidentiality
+
+This case study describes the verified architecture only. It does not disclose company credentials, tenant or billing identifiers, internal dashboard source code or proprietary configurations.

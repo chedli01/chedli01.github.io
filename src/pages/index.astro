@@ -1,9 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
-import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { LOCALE, md } from '../lib/content';
-import { image } from '../lib/images';
 
 const entry = await getEntry('home', LOCALE);
 if (!entry) throw new Error('Missing home content');
@@ -28,7 +26,7 @@ const { meta, hero, work, looking, experience, education, skills, contact } = en
             aria-hidden="true"
           >
           </div>
-          <img src="/avatar.svg" alt={hero.photo_alt} width="640" height="640" class="relative size-full rounded-full border-[6px] border-bg object-cover" />
+          <img src="/profile.jpg" alt={hero.photo_alt} width="850" height="850" decoding="async" fetchpriority="high" class="relative size-full rounded-full border-[6px] border-bg object-cover" />
         </div>
         <p class="absolute -bottom-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-semibold whitespace-nowrap shadow-[var(--shadow)] md:left-auto md:right-0 md:translate-x-0">
           <span class="relative flex size-2.5" aria-hidden="true">
@@ -62,7 +60,7 @@ const { meta, hero, work, looking, experience, education, skills, contact } = en
 
         <p class="mt-5 text-[1.0625rem] leading-relaxed text-muted [&_strong]:font-semibold [&_strong]:text-ink" set:html={md(hero.intro)} />
 
-        <ul class="mt-8 grid grid-cols-3 gap-2 sm:gap-3" data-stagger>
+        <ul class="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3" data-stagger>
           {
             hero.proof.map((p) => (
               <li
@@ -125,9 +123,8 @@ const { meta, hero, work, looking, experience, education, skills, contact } = en
         work.cards.map((c, i) => (
           <article class:list={['reveal tilt card group relative grid overflow-hidden md:grid-cols-2', 'c-' + c.color]}>
             <div class:list={['relative flex items-center justify-center overflow-hidden bg-c-soft p-5 sm:p-8', i % 2 && 'md:order-2']}>
-              <Image src={image(c.visual.src)} alt={c.visual.alt}
-                widths={[480, 800, 1100]} sizes="(min-width: 768px) 34rem, 100vw" loading="lazy"
-                class="w-full rounded-xl border border-line shadow-lg transition-transform duration-500 group-hover:scale-[1.03] group-hover:-rotate-1" />
+              <img src={`/images/${c.visual.src}`} alt={c.visual.alt} loading="lazy" decoding="async"
+                class="w-full rounded-xl border border-line bg-white object-contain shadow-lg transition-transform duration-500 group-hover:scale-[1.03] group-hover:-rotate-1" />
             </div>
             <div class="flex flex-col p-6 sm:p-8">
               <p class="eyebrow">{c.kicker}</p>

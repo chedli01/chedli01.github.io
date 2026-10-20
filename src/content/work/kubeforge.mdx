@@ -1,58 +1,64 @@
 ---
 title: "KubeForge"
-subtitle: "Kubernetes self-service environments through Crossplane and GitOps"
-description: "Designed a Kubernetes self-service platform using Crossplane v2, Python pull request validation, Argo CD synchronization and 10-stage E2E testing."
+subtitle: "A Kubernetes self-service platform: one developer request, eight managed resources"
+description: "Designed and implemented KubeForge with Crossplane v2, Go-templated Compositions, GitHub Actions validation, Argo CD GitOps and 10/10 passing E2E tests."
 order: 1
 color: "lilac"
 facts:
-  - { label: "Focus", value: "Platform Engineering / Internal Developer Platforms" }
+  - { label: "Focus", value: "Platform Engineering / Kubernetes self-service" }
   - { label: "Core stack", value: "Kubernetes, Crossplane v2, Go templating, Python, GitHub Actions, Argo CD" }
-  - { label: "Outcome", value: "8 managed Kubernetes resources; 10/10 E2E test stages passed" }
-  - { label: "Code", value: "[View KubeForge on GitHub](https://github.com/chedli01/KubeForge)" }
+  - { label: "Verified result", value: "8 reconciled Kubernetes resources; 10/10 E2E test stages passed" }
+  - { label: "Source", value: "[View KubeForge on GitHub](https://github.com/chedli01/KubeForge)" }
 next: "task-manager"
 ---
 
-KubeForge is a **Kubernetes self-service platform**: developers describe the environment they need in a single declarative YAML manifest, and the platform handles the lower-level Kubernetes objects.
+**I designed and implemented KubeForge**, a Kubernetes self-service platform that lets developers request an entire environment through **one declarative `DevEnvironment` YAML manifest**. Instead of having to manage namespaces, quotas, permissions and network policies individually, developers use a high-level API while Crossplane provisions and continuously reconciles the underlying infrastructure.
 
-![Conceptual KubeForge architecture: a manifest passes through validation, Argo CD and Crossplane to managed resources](/images/kubeforge.png)
+[![Animated KubeForge architecture showing GitHub Actions validation, Argo CD synchronization, Crossplane reconciliation and eight Kubernetes objects](/images/kubeforge.gif)](/images/kubeforge.gif)
 
-*Conceptual architecture illustration; not a screenshot of the deployed platform.*
+*My project architecture, showing the full request-to-reconciliation workflow. Click to view the full-size animation.*
 
-## The problem
+## The engineering challenge
 
-Creating a team environment in Kubernetes usually means coordinating a namespace, resource constraints, access controls and network boundaries. Asking each developer to write and manage these objects independently is repetitive and error-prone.
+A Kubernetes development environment needs much more than a namespace: it also needs resource limits, access permissions and networking boundaries. Requiring developers to maintain each low-level manifest introduces repeated work and configuration mistakes. **My goal was to turn environment creation into a controlled, self-service platform capability.**
 
-## What I designed and implemented
+## 1. Designing the platform API
 
-### 1. A high-level Kubernetes API
+I designed a new **`DevEnvironment` declarative resource** by extending the Kubernetes API with a **Crossplane v2 CompositeResourceDefinition (XRD)**, which generates the corresponding CRD. One high-level YAML specification expresses the desired developer environment without exposing the individual Kubernetes objects that implement it.
 
-I defined the **`DevEnvironment`** declarative resource using a **Crossplane v2 CompositeResourceDefinition (XRD)**, which generates the custom resource definition (CRD). Instead of maintaining many native manifests, a developer submits one high-level specification for the environment.
+The result is a developer-facing contract: **request an environment, not eight separate resources**.
 
-### 2. Composition and continuous reconciliation
+## 2. Building provisioning and reconciliation
 
-I designed and implemented the **Crossplane Composition with Go templating**, translating each `DevEnvironment` into **eight native Kubernetes resources**:
+I personally designed and implemented the **Crossplane Composition using Go templating**, mapping each `DevEnvironment` composite resource (XR) into **eight native Kubernetes resources**:
 
-- One Namespace, one ResourceQuota and one LimitRange.
-- Two Roles, one ServiceAccount and one RoleBinding.
-- One NetworkPolicy.
+- **Namespace**, **ResourceQuota** and **LimitRange** for isolation and resource constraints.
+- **Two Roles**, **ServiceAccount** and **RoleBinding** for role-based access.
+- **NetworkPolicy** for network boundaries.
 
-Crossplane reconciliation manages **creation, updates and drift correction** across the resource lifecycle. This is Go *templating* inside Crossplane, not a claim of writing a Go backend.
+Crossplane's reconciliation loop handles **initial provisioning, updates and drift correction**. This was an implementation in **Crossplane Go templating**, not a Go backend service.
 
-### 3. Validation before deployment; GitOps afterward
+## 3. Enforcing validation before GitOps synchronization
 
-I developed a **Python manifest validator** that checks YAML syntax, adherence to the XRD schema, and additional platform rules. The validator runs in **GitHub Actions for pull requests**. A noncompliant manifest fails a required CI check, which blocks merging into the protected `main` branch.
+I developed a **Python validator** that checks the **YAML syntax**, **XRD schema** and **platform-specific rules** of incoming `DevEnvironment` manifests.
 
-Once an approved request is merged, **Argo CD synchronizes the validated manifests** from Git with Kubernetes. This makes code review and version control the entry point for environment requests.
+I integrated that validator into **GitHub Actions CI triggered by pull requests**. If a manifest is noncompliant, a **required check fails and blocks the merge** to the protected `main` branch. After a valid request is merged, I configured **Argo CD** to synchronize the accepted manifests from Git to Kubernetes.
 
-### 4. End-to-end verification
+This creates a clear delivery boundary: **validate and review requests first; reconcile the approved desired state afterward**.
 
-I implemented an automated **10-stage end-to-end test suite** for provisioning, quotas, RBAC behavior, network policies, updates, drift correction and environment deletion. **All 10 stages passed** in the documented execution.
+## 4. Proving the platform works end to end
 
-## What this demonstrates
+I developed and ran a **10-stage automated E2E suite** that tests actual platform behavior—not simply YAML formatting—including:
 
-- **API abstraction:** give developers one clean interface instead of eight low-level manifests.
-- **Policy at the pull request boundary:** reject invalid environment requests before they are synchronized.
-- **Declarative operations:** let the control plane reconcile desired and actual state.
-- **Behavioral testing:** verify permissions, lifecycle and drift, not just valid YAML.
+- Provisioning of all expected resources and enforcement of quotas.
+- RBAC permissions and network policy behavior.
+- Configuration updates and correction of configuration drift.
+- Environment deletion and lifecycle cleanup.
+
+**All 10 out of 10 stages passed** in the documented execution.
+
+## What I contributed
+
+KubeForge brings together **API design, infrastructure abstraction, automated guardrails, GitOps and behavioral testing**. I owned the high-level API, Composition implementation, Python validation pipeline, Argo CD configuration and E2E verification to build a demonstrable self-service platform.
 
 **[Explore the KubeForge source code →](https://github.com/chedli01/KubeForge)**

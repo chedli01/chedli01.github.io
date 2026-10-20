@@ -1,58 +1,58 @@
 ---
 title: "Task Manager — Cloud & GitOps"
-subtitle: "Two Azure deployment strategies, automated delivery and observability"
-description: "A Terraform-provisioned Azure project using a VM and Ansible path, an AKS and Helm path, Argo CD GitOps, and Prometheus/Grafana observability."
+subtitle: "Two Azure architectures, automated infrastructure and a 5-minute GitOps delivery cycle"
+description: "Designed two Terraform-based Azure deployment paths: VM/Ansible/Docker Compose and AKS/Helm/GitOps, with Prometheus/Grafana observability and Argo CD/HPA debugging."
 order: 2
 color: "mint"
 facts:
   - { label: "Focus", value: "Cloud Infrastructure / CI/CD / GitOps / Observability" }
-  - { label: "Platforms", value: "Azure VM and Azure Kubernetes Service (AKS)" }
-  - { label: "Stack", value: "Terraform, Ansible, Docker Compose, Kubernetes, Helm, Argo CD, Prometheus, Grafana" }
-  - { label: "Code", value: "[Explore the repository](https://github.com/chedli01/task_management_devops)" }
+  - { label: "Deployment paths", value: "Cost-conscious Azure VM and scalable AKS" }
+  - { label: "Demonstrated result", value: "Approximately 5 minutes from code change to deployment" }
+  - { label: "Source", value: "[View Task Manager on GitHub](https://github.com/chedli01/task_management_devops)" }
 next: "azure-subscription-factory"
 ---
 
-Task Manager is a cloud infrastructure and DevOps project built to explore **cost-aware infrastructure choices**, reproducible environments, automated deployments and operational observability.
+**I designed and implemented two distinct Azure deployment strategies** for the same application: a **cost-conscious single-VM setup** and a **scalable AKS platform**. I used Infrastructure as Code and automation throughout, then added monitoring, GitOps delivery and controller-level troubleshooting to make the environments reproducible and operable.
 
-![Conceptual overview of the Task Manager Azure infrastructure paths and observability](/images/task-manager.png)
+[![Animated Task Manager architecture showing the Azure VM deployment and CI/CD delivery path](/images/task-manager.gif)](/images/task-manager.gif)
 
-*Conceptual architecture illustration; not a live dashboard.*
+*My animated diagram illustrates the single-VM strategy and its CI/CD flow. The AKS architecture and GitOps workflow are detailed below.*
 
-## One application, two infrastructure approaches
+## 1. Choosing infrastructure to match the workload
 
-I designed a **Terraform-based Azure architecture** with two strategies that address different operational needs:
+I designed a **Terraform-based Azure architecture** with two approaches rather than assuming Kubernetes was always necessary:
 
-- **Single VM:** a cost-conscious Linux virtual machine running multiple services through Docker Compose.
-- **AKS:** a scalable Kubernetes deployment path for higher workloads, with GitOps and cluster observability.
+- **Single VM:** a lower-cost Linux environment using **Docker Compose and Ansible** to run the application stack.
+- **Azure Kubernetes Service (AKS):** a more scalable, cloud-native platform for higher workloads, with **Helm, GitOps and cluster observability**.
 
-## VM path: Terraform and Ansible
+The key engineering decision was to separate the **application's delivery needs** from the **complexity and cost of its deployment platform**.
 
-I provisioned the Azure VM with **Terraform** and used **idempotent Ansible playbooks** for system configuration and service setup, including Nginx, backend services, PostgreSQL and Prometheus/Grafana.
+## 2. Provisioning and configuring the VM environment
 
-This separates infrastructure provisioning from configuration management and avoids relying on hand-configured servers.
+I provisioned the Azure VM with **Terraform**, then created **idempotent Ansible playbooks** to configure Linux and deploy **Nginx, backend services, PostgreSQL and Prometheus/Grafana**.
 
-## Kubernetes path: Terraform, Helm and monitoring
+This approach makes both infrastructure creation and application setup reproducible instead of dependent on manual server configuration.
 
-I provisioned **AKS with Terraform**, including the necessary **VNet/NSG** configuration. On top of the cluster, I used **Helm** to deploy Nginx Ingress, Argo CD and **kube-prometheus-stack**.
+## 3. Building the AKS platform and its observability
 
-I exposed metrics with **Prometheus and ServiceMonitor**, then used **Grafana** dashboards for visualization. I also worked with reusable **Kustomize base/overlays** for environment-specific configuration.
+I provisioned **AKS using Terraform**, including **VNet and NSG** configuration. I automated deployment of **Nginx Ingress, Argo CD and kube-prometheus-stack using Helm**.
 
-## End-to-end GitOps delivery
+For observability, I configured **Prometheus ServiceMonitor** to collect application metrics and visualized them in **Grafana dashboards**. I also used **Kustomize base/overlays** to separate shared Kubernetes resources from environment-specific configuration.
 
-I implemented a delivery workflow that:
+## 4. Delivering code through CI and pull-based GitOps
 
-1. Builds a new Docker image from code and tags it with the Git commit SHA.
-2. Updates the declarative deployment manifests in Git.
-3. Lets **Argo CD pull and synchronize** the accepted state to AKS.
+I built an end-to-end workflow in which **CI builds and tags Docker images with the commit SHA**, updates deployment manifests in Git, and **Argo CD pulls and synchronizes the desired state** to the cluster. Importantly, GitHub Actions runners do **not** require access to the cluster credentials to perform deployment.
 
-The documented workflow achieved a **roughly 5-minute code-to-deployment cycle**, while keeping cluster credentials out of GitHub Actions runners.
+The documented implementation achieved a **roughly 5-minute code-to-deployment cycle**.
 
-## Debugging an Argo CD / HPA conflict
+## 5. Solving a real controller reconciliation issue
 
-I identified a reconciliation loop where **Argo CD restored the `replicas` field** after the **Horizontal Pod Autoscaler (HPA)** had dynamically changed replica counts. I configured GitOps synchronization to ignore that field, allowing HPA to control scale based on CPU/memory consumption without repeated overrides.
+I diagnosed an **Argo CD / Horizontal Pod Autoscaler (HPA) conflict**: Argo CD was continuously reverting the `replicas` value after HPA adjusted it to match CPU/memory usage.
 
-## Engineering lessons
+I fixed the reconciliation loop by configuring Argo CD to **ignore the `replicas` field** during synchronization, allowing HPA to control scaling without GitOps overwriting the live replica count.
 
-Cloud engineering is more than successfully creating resources. This project required considering **infrastructure cost, repeatability, deployment safety, metrics, and interactions between independent controllers**.
+## What I contributed
 
-**[View the Task Manager infrastructure source →](https://github.com/chedli01/task_management_devops)**
+This project demonstrates more than provisioning Azure resources. I **designed both deployment strategies, implemented Terraform/Ansible/Helm automation, configured observability, built the CI-to-GitOps delivery flow and resolved a controller conflict**. It reflects practical cloud and platform engineering tradeoffs across cost, delivery speed and operability.
+
+**[Explore the Task Manager infrastructure source →](https://github.com/chedli01/task_management_devops)**

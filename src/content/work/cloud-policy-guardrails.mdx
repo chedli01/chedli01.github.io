@@ -1,55 +1,57 @@
 ---
 title: "Cloud Policy-as-Code Guardrails"
-subtitle: "Terraform/Azure validation with Rego policies, Python decisions and CI gates"
-description: "DevSecOps internship at Cognira: ~50 Rego policies across 15 governance domains, Conftest and OPA validation, Python reporting, GitHub Actions integration, and auditable exceptions."
+subtitle: "Preventing risky Terraform changes through Rego policies, Python decisions and CI enforcement"
+description: "At Cognira, architected Azure Terraform Policy-as-Code guardrails with ~50 Rego policies in 15 governance domains, Python verdicts, GitHub Actions enforcement and auditable exceptions."
 order: 4
 color: "peach"
 facts:
   - { label: "Role", value: "DevSecOps Engineer Intern — Cognira" }
   - { label: "When", value: "July – September 2026" }
-  - { label: "Stack", value: "Terraform, Azure, OPA, Rego, Conftest, Python, GitHub Actions" }
-  - { label: "Scope", value: "Approximately 50 policies covering 15 governance domains" }
+  - { label: "Core stack", value: "Terraform, Azure, OPA, Rego, Conftest, Python, GitHub Actions" }
+  - { label: "Verified scope", value: "Approximately 50 custom policies across 15 governance domains" }
 next: "kubeforge"
 ---
 
-At Cognira, I built a **pre-deployment Policy-as-Code guardrail** for **Terraform-based Azure infrastructure**. The goal was to make risky configurations visible and actionable during the review process, rather than after deployment.
+During my DevSecOps internship at Cognira, **I architected and built a Policy-as-Code guardrail layer** for **Terraform-managed Azure infrastructure**. The goal was to evaluate risks **before deployment**, make findings understandable to reviewers and allow teams to choose between **non-blocking audit and strict enforcement** without losing traceability.
 
-![Conceptual diagram of Terraform plan checks through Conftest, Rego, Python reports and CI](/images/cognira-guardrails.png)
+[![Architecture showing Terraform plan JSON, Conftest/OPA and Rego policies, Python reports and enforcement decisions](/images/cognira.jpg)](/images/cognira.jpg)
 
-*Conceptual policy validation workflow; no internal policy source code is published here.*
+*Architecture diagram of the Policy-as-Code workflow. Click to view full size.*
 
-## 1. Policy evaluation of Terraform plans
+## 1. Architecting pre-deployment policy checks
 
-I developed **approximately 50 custom Rego policies** with **deny/warn** decisions, spanning **15 governance domains**. These included access control, network exposure, sensitive-resource protection and cost governance.
+I authored **approximately 50 custom Rego policies with deny/warn decisions**, spanning **15 governance domains** such as **access control, network exposure, sensitive-resource protection and cost governance**.
 
-The workflow converts proposed infrastructure changes to **Terraform plan JSON** and uses **Conftest/OPA** to evaluate the plan against the Rego policies **before deployment**.
+The architecture evaluates **Terraform plan JSON** using **Conftest/OPA** and external JSON/YAML policy data **before infrastructure changes are applied**. This enables review of the proposed Azure configuration without depending on the live state after deployment.
 
-## 2. Python reporting and reviewer decisions
+## 2. Building actionable policy reporting in Python
 
-I implemented a **Python engine** that transforms the Conftest JSON findings into readable **terminal, Markdown and GitHub Actions reports**.
+I developed a **Python reporting and decision engine** that parses the JSON output of Conftest, maps findings to the **affected Terraform resources**, and publishes human-readable reports in the **terminal, Markdown and GitHub Actions**.
 
-Findings are linked to their affected resources and summarized into four decision states:
+The engine produces explicit decision states so reviewers do not have to interpret raw policy output:
 
-- **PASSED:** checks can proceed under the configured rules.
-- **REVIEW REQUIRED:** warnings or findings need human evaluation.
-- **BLOCKED:** enforcing conditions prevent continuing.
-- **INCONCLUSIVE:** the evaluation cannot confidently produce a conclusive decision.
+- **PASSED** — the evaluation can proceed under its configured rules.
+- **REVIEW REQUIRED** — findings require human review.
+- **BLOCKED** — enforcing conditions prevent proceeding.
+- **INCONCLUSIVE** — the evaluation cannot produce a conclusive decision.
 
-These labels are summaries of the implemented decision engine, not invented compliance certifications.
+These are workflow verdicts, not claims of a formal compliance certification.
 
-## 3. CI/CD integration: audit or enforcement
+## 3. Integrating audit and enforcement into CI/CD
 
-I integrated validation into a **GitHub Actions Terraform pipeline**, publishing findings automatically and supporting two execution modes:
+I integrated the guardrail into a **GitHub Actions Terraform CI/CD pipeline**, publishing verdicts automatically and supporting two deliberate operating modes:
 
-- **Audit mode:** report the issues without blocking the workflow.
-- **Strict enforcement:** fail the pipeline and prevent `terraform apply` while active policy violations remain.
+- **Audit mode:** surfaces findings without blocking the workflow.
+- **Strict mode:** fails the pipeline and **prevents `terraform apply` while active violations remain**.
 
-## 4. Auditable time-limited exceptions
+This connects infrastructure review, actionable feedback and enforcement within the delivery workflow rather than leaving policy checks as an isolated tool.
 
-I designed an exception mechanism with **ticket references**, **exact policy/resource/severity matching**, and **automatic expiry checks**. Approved and expired exceptions remain visible in reports, maintaining traceability instead of silently suppressing findings.
+## 4. Designing exceptions without hiding violations
 
-## Engineering outcomes
+I implemented an **auditable, temporary exception workflow** using **ticket references, exact policy/resource/severity matching and automated expiration checks**. Approved or expired findings remain visible in reporting, preserving traceability instead of silently discarding policy results.
 
-This work connected **cloud security policy**, **developer feedback**, and **CI/CD enforcement** around a consistent decision workflow. It demonstrates pre-deployment governance and DevSecOps automation, without implying penetration testing or external compliance certification.
+## What I contributed
 
-*This case study only describes verified responsibilities and architecture; Cognira internal source and proprietary policy configurations are not exposed.*
+I took the guardrail from **policy architecture and authoring** to **Python verdict generation, GitHub Actions integration and exception handling**. The outcome is a demonstrated **pre-deployment cloud governance workflow** combining policy evaluation, reviewer feedback and configurable CI controls.
+
+*This is an architecture-level description. Cognira's proprietary policy source, credentials and internal configurations are not shared.*

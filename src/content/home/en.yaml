@@ -1,14 +1,13 @@
-# Edit the content here: src/content/home/en.yaml
-# Verified professional profile. Replace avatar.svg with your own photo if desired.
+# Content for the personal portfolio. Project images live in public/images/.
 meta:
   title: Chedli Masmoudi · DevOps & Platform Engineering
-  description: Chedli Masmoudi — final-year Software Engineering student at INSAT, Terraform Associate
-    certified. DevOps, Cloud, Platform Engineering, Kubernetes, GitOps and DevSecOps. Seeking a 6-month
-    PFE internship starting February 2027.
+  description: 'Chedli Masmoudi — final-year Software Engineering student at INSAT and HashiCorp Certified:
+    Terraform Associate (004). DevOps, Azure, Kubernetes, GitOps, Platform Engineering and DevSecOps. Available
+    for a final-year DevOps internship from January or February 2027.'
 hero:
   greeting: Hi, I'm
   name: Chedli Masmoudi
-  photo_alt: Illustrated CM initials in place of a personal profile photo.
+  photo_alt: Portrait of Chedli Masmoudi, wearing glasses and a light-colored polo shirt.
   roles_prefix: I build
   roles:
   - cloud infrastructure as code
@@ -16,25 +15,32 @@ hero:
   - secure CI/CD and GitOps pipelines
   - observable cloud-native systems
   headline: DevOps, Cloud Infrastructure, Platform Engineering & DevSecOps
-  intro: I'm a **final-year Software Engineering student at INSAT** and a **HashiCorp Certified Terraform
-    Associate (004)**. I design **Azure infrastructure with Terraform and Ansible**, build **Kubernetes
-    platforms with Crossplane**, automate **CI/CD and GitOps**, and integrate **Policy-as-Code** controls
-    into delivery workflows. I enjoy making infrastructure reproducible, secure and easier for developers
-    to use.
+  intro: >-
+    I'm a **final-year Software Engineering student at INSAT** and hold the **HashiCorp Certified: Terraform
+    Associate (004)** credential. I'm passionate about designing the infrastructure behind **reliable, secure
+    and scalable software delivery**. Working across **DevOps, Cloud Infrastructure, Platform Engineering and
+    DevSecOps**, I focus on simplifying complex environments, automating delivery and building security into
+    the process. From **Kubernetes self-service platforms** to **cloud governance and GitOps automation**,
+    I've put these ideas into practice through hands-on engineering work, with an emphasis on **ownership,
+    developer experience and measurable results**.
   proof:
-  - count: 50
-    suffix: ''
-    label: approx. Rego policies built for Azure governance
-    color: peach
-  - count: 8
-    suffix: ''
-    label: Kubernetes resources composed per DevEnvironment
+  - count: 5
+    suffix: ' min'
+    label: code-to-deployment GitOps cycle
     color: mint
-  - count: 10
-    suffix: /10
-    label: KubeForge end-to-end test stages passed
+  - count: 60
+    suffix: '%'
+    label: reduction in Docker image size
+    color: peach
+  - count: 2
+    suffix: ' + 1'
+    label: completed DevOps & cloud internships + Full Stack freelance experience
     color: lilac
-  availability: Seeking PFE internship · February 2027 · Open to relocation across Europe
+  - count: 1
+    suffix: ''
+    label: HashiCorp Terraform Associate (004)
+    color: sky
+  availability: Open to relocation · Available January or February 2027
   buttons:
   - label: View CV
     href: /cv.pdf
@@ -46,7 +52,8 @@ hero:
     href: https://linkedin.com/in/chedli-masmoudi-4b6911328
 work:
   heading: Selected work
-  intro: Four in-depth case studies across platform engineering, cloud delivery and infrastructure security.
+  intro: Projects I designed and built, with a focus on technical decisions, automation and outcomes—not 
+    just the tools used.
   cards:
   - slug: kubeforge
     color: lilac
@@ -54,20 +61,20 @@ work:
     title: KubeForge
     visual:
       kind: image
-      src: kubeforge.png
-      alt: Original conceptual diagram of the KubeForge self-service workflow from a developer manifest
-        to Crossplane-managed resources.
-    summary: A Kubernetes self-service platform where developers request complete environments with a
-      single declarative DevEnvironment manifest.
+      src: kubeforge.gif
+      alt: Animated KubeForge architecture showing GitHub pull-request validation, GitOps, Crossplane 
+        reconciliation and the eight managed Kubernetes objects.
+    summary: I designed and built a Kubernetes self-service platform that turns a single DevEnvironment 
+      request into a managed environment, with automated validation, GitOps delivery and reconciliation.
     badges:
     - Crossplane v2
     - 8 managed resources
     - 10/10 E2E tests
     proof:
-    - Built the **XRD/CRD and Go-templated Composition** that provisions and reconciles 8 native Kubernetes
-      resources.
-    - Added **Python pull-request validation**, required CI checks and **Argo CD** synchronization from
-      main.
+    - Designed the **Crossplane v2 API extension and Go-templated Composition** to provision and 
+      continuously reconcile **8 Kubernetes resources**.
+    - Developed **Python pull-request validation**, enforced required CI checks, configured **Argo CD** 
+      synchronization and verified the platform with **10/10 E2E tests**.
     stack:
     - Kubernetes
     - Crossplane
@@ -85,18 +92,19 @@ work:
     title: Task Manager — Cloud & GitOps
     visual:
       kind: image
-      src: task-manager.png
-      alt: Original conceptual illustration for Azure VM and AKS deployment options, automation, GitOps
-        and observability.
-    summary: A Terraform-based Azure architecture with a cost-conscious VM path and a scalable AKS path,
-      both automated for repeatable delivery.
+      src: task-manager.gif
+      alt: Animated architecture diagram of the Azure VM deployment strategy and CI/CD pipeline for Task 
+        Manager.
+    summary: I engineered two automated Azure infrastructure paths—a cost-conscious VM and a scalable AKS
+      platform—and delivered a documented 5-minute code-to-deployment GitOps workflow.
     badges:
     - 2 infrastructure strategies
     - 5-minute GitOps cycle
     proof:
-    - Provisioned **VM + Ansible** and **AKS + Helm** with Prometheus/Grafana observability.
-    - Delivered **SHA-tagged CI → GitOps deployments** and resolved an **Argo CD / HPA reconciliation
-      loop**.
+    - Provisioned **Azure VM and AKS with Terraform**, automated configuration with **Ansible and Helm**,
+      and added **Prometheus/Grafana** observability.
+    - Built **SHA-tagged CI-to-GitOps delivery** and resolved an **Argo CD/HPA reconciliation conflict** 
+      so autoscaling works without controller interference.
     stack:
     - Azure
     - Terraform
@@ -115,17 +123,20 @@ work:
     title: Azure Subscription Factory
     visual:
       kind: image
-      src: azure-factory.png
-      alt: Original conceptual diagram of the YAML request, GitLab Terraform pipeline, manual approval
-        and Azure subscription creation.
-    summary: A controlled provisioning workflow that turns YAML requests into Azure subscriptions under
-      the appropriate MCA billing scope and Management Group.
+      src: azure-factory.svg
+      alt: 'Expanded Azure Subscription Factory architecture: request portal, YAML, GitLab Terraform stages,
+        manual review and Azure MCA / Management Group association.'
+    summary: I built a controlled Azure subscription provisioning workflow that transforms dashboard 
+      requests into reviewed Terraform changes, while respecting billing scopes and the Management Group 
+      hierarchy.
     badges:
     - IaC automation
     - Manual approval gate
     proof:
-    - Built a dedicated **Terraform azurerm_subscription module** driven by request parameters.
-    - Orchestrated **validate → plan → manual approval → apply** with service-principal authentication.
+    - Implemented a **YAML-driven Terraform `azurerm_subscription` module** for subscription creation 
+      under the correct **MCA billing scope** and Management Group.
+    - Automated **validate → plan → manual approval → apply** in **GitLab CI/CD**, enabling plan review 
+      before changes are executed with service-principal authentication.
     stack:
     - Azure
     - Terraform
@@ -140,18 +151,19 @@ work:
     title: Cloud Policy-as-Code Guardrails
     visual:
       kind: image
-      src: cognira-guardrails.png
-      alt: Original conceptual diagram showing Terraform plan validation with Conftest, OPA, Rego, Python
-        verdicts and GitHub Actions.
-    summary: Pre-deployment Terraform/Azure guardrails with custom Rego policies, actionable Python reporting
-      and configurable CI enforcement.
+      src: cognira.jpg
+      alt: Architecture diagram of Terraform plan JSON processed by Conftest and Rego policies, a Python 
+        reporter and review/enforcement decisions.
+    summary: 'At Cognira, I architected pre-deployment guardrails for Terraform-managed Azure infrastructure:
+      custom policies, actionable Python verdicts and auditable CI enforcement.'
     badges:
     - ~50 policies
     - 15 governance domains
     proof:
-    - Created **approximately 50 Rego deny/warn policies** across 15 governance domains.
-    - Built **Python decision reports**, strict/audit GitHub Actions modes, and auditable time-limited
-      exceptions.
+    - Authored **~50 Rego deny/warn policies across 15 governance domains** and integrated 
+      **Conftest/OPA** checks of Terraform plans.
+    - Developed a **Python decision/reporting engine**, GitHub Actions **audit and strict modes**, and 
+      **time-limited, traceable exceptions**.
     stack:
     - Terraform
     - Azure
@@ -163,17 +175,18 @@ work:
     cta: Explore case study
 looking:
   heading: What I’m looking for
-  title: A 6-month final-year internship in DevOps, Cloud or Platform Engineering
-  text: I want to help teams automate cloud infrastructure, improve Kubernetes platforms, ship reliable
-    CI/CD and GitOps workflows, and build security and observability into everyday engineering. I am interested
-    in DevOps, DevSecOps, Platform Engineering, Cloud Infrastructure, SRE and related roles—not only software
-    development.
+  title: Seeking a 6-month Final-Year DevOps Internship
+  text: I want to help teams automate cloud infrastructure, improve Kubernetes platforms, ship reliable 
+    CI/CD and GitOps workflows, and build security and observability into everyday engineering. I am 
+    interested in DevOps, DevSecOps, Platform Engineering, Cloud Infrastructure, SRE and related 
+    roles—not only software development. Available January or February 2027 and open to relocating across
+    Europe.
   chips:
-  - label: Starting February 2027
+  - label: Available January or February 2027
     color: peach
-  - label: 6-month PFE / graduation internship
+  - label: 6-month final-year internship
     color: mint
-  - label: France first · open to Europe
+  - label: Open to relocation · France / Europe
     color: lilac
   - label: French C1 · English C1 · Arabic native
     color: sky
@@ -184,10 +197,11 @@ experience:
     role: DevSecOps Engineer Intern
     org: Cognira
     color: peach
-    text: Architected a **Terraform/Azure Policy-as-Code guardrail** with approximately **50 custom Rego
-      policies across 15 domains**. Built a Python verdict/reporting engine for Conftest findings, integrated
-      audit and enforcing modes into GitHub Actions, and implemented auditable temporary exceptions with
-      expiration checks.
+    text: >-
+      **Architected and built pre-deployment Policy-as-Code guardrails** for Terraform-managed Azure infrastructure,
+      authoring **approximately 50 Rego deny/warn policies across 15 governance domains**. Developed a **Python
+      reporting and verdict engine** that links findings to affected resources; integrated **GitHub Actions
+      audit/strict enforcement** and designed **auditable temporary exceptions** with expiry checks.
     tags:
     - Azure
     - Terraform
@@ -195,26 +209,14 @@ experience:
     - Conftest
     - Python
     - GitHub Actions
-  - dates: Summer 2026
-    role: Cloud / DevOps Internship Work
-    org: PCP
-    color: sky
-    text: 'Built an **Azure Subscription Factory**: dashboard requests stored as YAML flow through GitLab
-      CI/CD to a dedicated Terraform module, creating Azure subscriptions under MCA billing scopes and
-      associating them with Management Groups after manual approval.'
-    tags:
-    - Azure
-    - Terraform
-    - GitLab CI/CD
-    - YAML
-    - Azure governance
   - dates: Nov 2025 – Feb 2026
     role: Freelance Full Stack Engineer
     org: Collabios
     color: lilac
-    text: Designed an event-driven **NestJS payment workflow** using Stripe Connect, PostgreSQL and Redis,
-      with idempotent asynchronous processing. An internal credit/refund mechanism **reduced payment-gateway
-      fees by 40%** while preserving consistency.
+    text: >-
+      **Architected an event-driven payment workflow** with NestJS, Stripe Connect, PostgreSQL and Redis, using
+      **idempotent asynchronous processing** to maintain transaction consistency. Implemented an **internal
+      credit/refund mechanism that reduced payment-gateway fees by 40%**.
     tags:
     - NestJS
     - PostgreSQL
@@ -224,9 +226,10 @@ experience:
     role: Backend & DevOps Intern
     org: Billcom Consulting
     color: mint
-    text: Optimized Spring Boot Docker images with multi-stage builds, **reducing image size by 60%**.
-      Built Jenkins/GitHub Actions pipelines and multi-service Docker Compose deployments; developed a
-      Spring Boot/Drools API with **85% JUnit/Mockito test coverage**.
+    text: >-
+      **Reduced Spring Boot Docker image size by 60%** through multi-stage builds; built **Jenkins/GitHub Actions
+      CI/CD pipelines** and orchestrated services with Docker Compose. Developed a **Spring Boot/Drools REST
+      API** and achieved **85% test coverage** with JUnit/Mockito.
     tags:
     - Docker
     - Jenkins
@@ -237,8 +240,10 @@ experience:
     role: Platform Lead
     org: Hack For Good 3.0 · Junior Entreprise INSAT
     color: peach
-    text: Deployed and operated a **real-time voting platform for 500+ concurrent users**, using Express.js,
-      Server-Sent Events and MongoDB Change Streams, with Nginx load balancing across Azure backend replicas.
+    text: >-
+      **Deployed and operated a real-time voting platform supporting 500+ concurrent users**. Implemented real-time
+      updates with **Express.js, SSE and MongoDB Change Streams**, with **Nginx load balancing across multiple
+      Azure backend replicas**.
     tags:
     - Azure
     - Nginx
@@ -250,11 +255,12 @@ education:
   school: INSAT — National Institute of Applied Science and Technology, Tunis
   degree: Software Engineering · Engineering degree (Master’s equivalent)
   dates: Sep 2022 – Expected 2027
-  details: 'Final-year student. Coursework includes **DevOps, distributed systems, cloud infrastructure
-    and systems architecture**. **HashiCorp Certified: Terraform Associate (004)**.'
+  details: 'Final-year student. Coursework includes **DevOps, distributed systems, cloud infrastructure and
+    systems architecture**. **HashiCorp Certified: Terraform Associate (004)**.'
 skills:
   heading: Technical skills
-  intro: Technologies I have actually used, grouped around my work in infrastructure and engineering automation.
+  intro: Technologies I have actually used, grouped around my work in infrastructure and engineering 
+    automation.
   groups:
   - name: Infrastructure as Code & automation
     color: lilac
@@ -324,8 +330,9 @@ skills:
     - MongoDB
 contact:
   heading: Contact
-  title: Looking for a DevOps, Cloud or Platform Engineering intern?
-  text: I would love to discuss a PFE internship starting February 2027.
+  title: Looking for a Final-Year DevOps Intern?
+  text: I would love to discuss a six-month internship in DevOps, DevSecOps, Cloud Infrastructure or 
+    Platform Engineering, starting in January or February 2027.
   email: chedli.masmoudi01@gmail.com
   copy_label: Copy email
   copied_label: Copied!
