@@ -1,0 +1,58 @@
+---
+title: "Task Manager — Cloud & GitOps"
+subtitle: "Two Azure deployment strategies, automated delivery and observability"
+description: "A Terraform-provisioned Azure project using a VM and Ansible path, an AKS and Helm path, Argo CD GitOps, and Prometheus/Grafana observability."
+order: 2
+color: "mint"
+facts:
+  - { label: "Focus", value: "Cloud Infrastructure / CI/CD / GitOps / Observability" }
+  - { label: "Platforms", value: "Azure VM and Azure Kubernetes Service (AKS)" }
+  - { label: "Stack", value: "Terraform, Ansible, Docker Compose, Kubernetes, Helm, Argo CD, Prometheus, Grafana" }
+  - { label: "Code", value: "[Explore the repository](https://github.com/chedli01/task_management_devops)" }
+next: "azure-subscription-factory"
+---
+
+Task Manager is a cloud infrastructure and DevOps project built to explore **cost-aware infrastructure choices**, reproducible environments, automated deployments and operational observability.
+
+![Conceptual overview of the Task Manager Azure infrastructure paths and observability](/images/task-manager.png)
+
+*Conceptual architecture illustration; not a live dashboard.*
+
+## One application, two infrastructure approaches
+
+I designed a **Terraform-based Azure architecture** with two strategies that address different operational needs:
+
+- **Single VM:** a cost-conscious Linux virtual machine running multiple services through Docker Compose.
+- **AKS:** a scalable Kubernetes deployment path for higher workloads, with GitOps and cluster observability.
+
+## VM path: Terraform and Ansible
+
+I provisioned the Azure VM with **Terraform** and used **idempotent Ansible playbooks** for system configuration and service setup, including Nginx, backend services, PostgreSQL and Prometheus/Grafana.
+
+This separates infrastructure provisioning from configuration management and avoids relying on hand-configured servers.
+
+## Kubernetes path: Terraform, Helm and monitoring
+
+I provisioned **AKS with Terraform**, including the necessary **VNet/NSG** configuration. On top of the cluster, I used **Helm** to deploy Nginx Ingress, Argo CD and **kube-prometheus-stack**.
+
+I exposed metrics with **Prometheus and ServiceMonitor**, then used **Grafana** dashboards for visualization. I also worked with reusable **Kustomize base/overlays** for environment-specific configuration.
+
+## End-to-end GitOps delivery
+
+I implemented a delivery workflow that:
+
+1. Builds a new Docker image from code and tags it with the Git commit SHA.
+2. Updates the declarative deployment manifests in Git.
+3. Lets **Argo CD pull and synchronize** the accepted state to AKS.
+
+The documented workflow achieved a **roughly 5-minute code-to-deployment cycle**, while keeping cluster credentials out of GitHub Actions runners.
+
+## Debugging an Argo CD / HPA conflict
+
+I identified a reconciliation loop where **Argo CD restored the `replicas` field** after the **Horizontal Pod Autoscaler (HPA)** had dynamically changed replica counts. I configured GitOps synchronization to ignore that field, allowing HPA to control scale based on CPU/memory consumption without repeated overrides.
+
+## Engineering lessons
+
+Cloud engineering is more than successfully creating resources. This project required considering **infrastructure cost, repeatability, deployment safety, metrics, and interactions between independent controllers**.
+
+**[View the Task Manager infrastructure source →](https://github.com/chedli01/task_management_devops)**

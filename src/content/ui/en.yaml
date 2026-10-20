@@ -1,0 +1,15 @@
+skip: Skip to content
+nav_work: Projects
+nav_experience: Experience
+nav_skills: Skills
+nav_contact: Contact
+home: Chedli Masmoudi
+facts_label: Project facts
+next_case: Next project
+back_home: All projects
+copy: Copy
+copied: Copied
+footer: Built with Astro · Hosted on GitHub Pages · No cookies
+not_found_title: Page not found
+not_found_text: This page does not exist. Explore the projects instead.
+not_found_link: Back to portfolio

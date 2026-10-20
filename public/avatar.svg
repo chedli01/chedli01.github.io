@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+<defs><linearGradient id="a" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1e1b2e"/><stop offset="1" stop-color="#453a79"/></linearGradient><radialGradient id="b"><stop stop-color="#cdb9ff" stop-opacity=".35"/><stop offset="1" stop-color="#cdb9ff" stop-opacity="0"/></radialGradient></defs>
+<rect width="640" height="640" fill="url(#a)"/><circle cx="130" cy="150" r="230" fill="url(#b)"/><circle cx="540" cy="520" r="270" fill="url(#b)"/>
+<g fill="none" stroke="#ab9dde" stroke-opacity=".36" stroke-width="4"><rect x="100" y="100" width="440" height="440" rx="90"/><path d="M155 490H485M155 160H485"/></g>
+<text x="320" y="354" font-family="Arial,sans-serif" font-size="205" font-weight="bold" text-anchor="middle" fill="#f7f1ff" letter-spacing="-12">CM</text>
+<text x="320" y="414" font-family="Arial,sans-serif" font-size="25" text-anchor="middle" fill="#d1c5f8" letter-spacing="7">CLOUD · DEVOPS</text></svg>

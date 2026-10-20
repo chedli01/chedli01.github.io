@@ -1,0 +1,42 @@
+---
+title: "Azure Subscription Factory"
+subtitle: "Terraform automation with a controlled GitLab CI/CD approval workflow"
+description: "Automated Azure subscription provisioning with YAML requests, Terraform, GitLab CI, MCA billing scopes, Management Groups and an explicit approval gate."
+order: 3
+color: "sky"
+facts:
+  - { label: "Context", value: "Cloud / DevOps internship work — PCP, 2026" }
+  - { label: "Focus", value: "Azure provisioning and infrastructure governance" }
+  - { label: "Stack", value: "Azure, Terraform, GitLab CI/CD, YAML, service principal authentication" }
+  - { label: "Publishing", value: "Architecture summary only; no internal repository or confidential configuration shared" }
+next: "cloud-policy-guardrails"
+---
+
+During my cloud/DevOps internship work, I helped automate the **controlled creation of Azure subscriptions** through an infrastructure-as-code workflow that preserves a human review step before applying changes.
+
+![Conceptual overview of a YAML request, GitLab plan, manual approval and Terraform subscription creation](/images/azure-factory.png)
+
+*Conceptual illustration of the workflow; internal dashboard images and infrastructure details are intentionally omitted.*
+
+## Request to Terraform
+
+A subscription request enters through an **internal dashboard** and is persisted as **YAML**. A GitLab CI/CD pipeline reads the request and passes the required parameters into a **dedicated Terraform module using `azurerm_subscription`**.
+
+The Terraform configuration creates the subscription under the appropriate **Microsoft Customer Agreement (MCA) billing scope** and associates it with its target **Azure Management Group**.
+
+## Approval-oriented delivery
+
+The pipeline implements the sequence:
+
+1. **Validate:** verify the Terraform configuration.
+2. **Plan:** prepare and expose the proposed infrastructure changes for review.
+3. **Manual approval:** require an explicit action before provisioning.
+4. **Apply:** execute the previously reviewed changes with **service-principal authentication**.
+
+## Why it matters
+
+A subscription is not just an Azure resource—it belongs to a billing scope and a governance hierarchy. Automating its creation while retaining a **reviewable plan and an approval gate** helps standardize a repetitive administrative workflow.
+
+## Scope and confidentiality
+
+This page summarizes my implementation at the architectural level. It does not expose organization-specific billing identifiers, credentials, internal dashboard source code or tenant configuration.
