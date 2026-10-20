@@ -9,7 +9,7 @@ const home = defineCollection({
     meta: z.object({ title: z.string(), description: z.string() }),
     hero: z.object({
       greeting:z.string(), name:z.string(), photo_alt:z.string(), roles_prefix:z.string(), roles:z.array(z.string()),
-      headline:z.string(), intro:z.string(), proof:z.array(z.object({count:z.number(),suffix:z.string(),label:z.string(),color})),
+      headline:z.string(), intro:z.string(), proof:z.array(z.object({count:z.number(),prefix:z.string().optional(),suffix:z.string(),label:z.string(),color})),
       availability:z.string(), buttons:z.array(link)
     }),
     work:z.object({ heading:z.string(), intro:z.string(), cards:z.array(z.object({

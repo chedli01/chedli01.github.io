@@ -12,9 +12,9 @@ const { meta, hero, work, looking, experience, education, skills, contact } = en
   <!-- Hero -->
   <section class="relative isolate overflow-x-clip">
     <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-      <div class="blob absolute -top-24 left-[4%] size-[24rem] rounded-full bg-[var(--peach)] opacity-60 blur-3xl"></div>
-      <div class="blob absolute top-24 right-[4%] size-[26rem] rounded-full bg-[var(--lilac)] opacity-60 blur-3xl"></div>
-      <div class="blob absolute bottom-[-4rem] left-[30%] size-[22rem] rounded-full bg-[var(--mint)] opacity-50 blur-3xl"></div>
+      <div class="blob absolute -top-24 left-[4%] size-[25rem] rounded-full bg-[var(--mint)] opacity-20 blur-3xl"></div>
+      <div class="blob absolute top-24 right-[4%] size-[26rem] rounded-full bg-[var(--sky)] opacity-20 blur-3xl"></div>
+      <div class="blob absolute bottom-[-4rem] left-[30%] size-[22rem] rounded-full bg-[var(--peach)] opacity-10 blur-3xl"></div>
     </div>
 
     <div class="container-page grid items-center gap-10 pt-12 pb-20 md:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] md:gap-12 md:pt-20 md:pb-28 lg:gap-16">
@@ -22,7 +22,7 @@ const { meta, hero, work, looking, experience, education, skills, contact } = en
       <div class="relative mx-auto w-full max-w-[16rem] sm:max-w-[18rem] md:-mt-16 md:max-w-[21rem]">
         <div class="relative aspect-square">
           <div
-            class="ring absolute -inset-2 rounded-full bg-[conic-gradient(from_0deg,#ffc4a6,#cdb9ff,#a3e8c4,#b0d7ff,#ffc4a6)]"
+            class="ring absolute -inset-2 rounded-full bg-[conic-gradient(from_70deg,#1ba69d,#4b86b5,#d38b56,#1ba69d)]"
             aria-hidden="true"
           >
           </div>
@@ -43,7 +43,7 @@ const { meta, hero, work, looking, experience, education, skills, contact } = en
         <h1 class="mt-1 font-display text-5xl leading-[1] font-extrabold tracking-[-0.04em] sm:text-6xl lg:text-7xl">
           {hero.name.split(' ')[0]}{' '}
           <span class="relative whitespace-nowrap">
-            <span class="absolute inset-x-[-0.1em] bottom-[0.06em] -z-10 h-[0.32em] rounded-full bg-[var(--lilac)]" aria-hidden="true"></span>
+            <span class="absolute inset-x-[-0.1em] bottom-[0.06em] -z-10 h-[0.17em] rounded-sm bg-[var(--mint)]" aria-hidden="true"></span>
             {hero.name.split(' ').slice(1).join(' ')}
           </span>
         </h1>
@@ -65,13 +65,13 @@ const { meta, hero, work, looking, experience, education, skills, contact } = en
             hero.proof.map((p) => (
               <li
                 class:list={[
-                  'reveal stat relative overflow-hidden rounded-2xl border border-white/60 bg-white/55 px-3 pt-4 pb-3 text-left sm:px-4 sm:pt-5 sm:pb-4 shadow-[var(--shadow)] backdrop-blur-md dark:border-white/10 dark:bg-white/5',
+                  'reveal stat relative overflow-hidden rounded-xl border border-line bg-surface/75 px-3 pt-4 pb-3 text-left sm:px-4 sm:pt-5 sm:pb-4 shadow-[var(--shadow)] backdrop-blur-md dark:border-line dark:bg-surface/80',
                   'c-' + p.color,
                 ]}
               >
                 <span class="absolute inset-x-0 top-0 h-1 bg-c-strong" aria-hidden="true" />
                 <p class="font-mono text-lg font-semibold tracking-tight text-c-strong sm:text-2xl">
-                  <span data-count={p.count}>{p.count.toLocaleString('en-US')}</span>
+                  {p.prefix ?? ''}<span data-count={p.count}>{p.count.toLocaleString('en-US')}</span>
                   {p.suffix}
                 </p>
                 <p class="mt-1 text-xs leading-snug text-muted sm:text-sm">{p.label}</p>

@@ -1,14 +1,14 @@
 ---
 title: "Cloud Policy-as-Code Guardrails"
 subtitle: "Preventing risky Terraform changes through Rego policies, Python decisions and CI enforcement"
-description: "At Cognira, architected Azure Terraform Policy-as-Code guardrails with ~50 Rego policies in 15 governance domains, Python verdicts, GitHub Actions enforcement and auditable exceptions."
+description: "Cognira Policy-as-Code for Azure: ~50 Rego policies, 15 domains, Python reports and GitHub Actions controls for Terraform deployments."
 order: 4
 color: "peach"
 facts:
   - { label: "Role", value: "DevSecOps Engineer Intern — Cognira" }
   - { label: "When", value: "July – September 2026" }
   - { label: "Core stack", value: "Terraform, Azure, OPA, Rego, Conftest, Python, GitHub Actions" }
-  - { label: "Verified scope", value: "Approximately 50 custom policies across 15 governance domains" }
+  - { label: "Policy coverage", value: "Approximately 50 custom policies across 15 governance domains" }
 next: "kubeforge"
 ---
 
@@ -35,7 +35,6 @@ The engine produces explicit decision states so reviewers do not have to interpr
 - **BLOCKED** — enforcing conditions prevent proceeding.
 - **INCONCLUSIVE** — the evaluation cannot produce a conclusive decision.
 
-These are workflow verdicts, not claims of a formal compliance certification.
 
 ## 3. Integrating audit and enforcement into CI/CD
 
@@ -54,4 +53,4 @@ I implemented an **auditable, temporary exception workflow** using **ticket refe
 
 I took the guardrail from **policy architecture and authoring** to **Python verdict generation, GitHub Actions integration and exception handling**. The outcome is a demonstrated **pre-deployment cloud governance workflow** combining policy evaluation, reviewer feedback and configurable CI controls.
 
-*This is an architecture-level description. Cognira's proprietary policy source, credentials and internal configurations are not shared.*
+*Confidentiality: Cognira's proprietary implementation and internal configurations are not public; this case study shares the architecture and engineering contributions.*

@@ -1,7 +1,7 @@
 ---
 title: "Task Manager — Cloud & GitOps"
 subtitle: "Two Azure architectures, automated infrastructure and a 5-minute GitOps delivery cycle"
-description: "Designed two Terraform-based Azure deployment paths: VM/Ansible/Docker Compose and AKS/Helm/GitOps, with Prometheus/Grafana observability and Argo CD/HPA debugging."
+description: "Task Manager: Azure VM and AKS with Terraform, Ansible, Helm, GitOps, Linkerd mTLS, Prometheus/Grafana and Argo CD/HPA debugging."
 order: 2
 color: "mint"
 facts:
@@ -39,11 +39,19 @@ I provisioned **AKS using Terraform**, including **VNet and NSG** configuration.
 
 For observability, I configured **Prometheus ServiceMonitor** to collect application metrics and visualized them in **Grafana dashboards**. I also used **Kustomize base/overlays** to separate shared Kubernetes resources from environment-specific configuration.
 
+### AKS, GitOps and service-mesh architecture
+
+[![AKS architecture diagram showing Terraform provisioning, GitHub Actions CI, Git manifests, Argo CD App-of-Apps, Helm-managed services, Kubernetes workloads, Prometheus and Grafana, HPA and Linkerd mTLS](/images/task-manager-aks-gitops.svg)](/images/task-manager-aks-gitops.svg)
+
+*AKS delivery and operations architecture — the second deployment strategy alongside the VM animation above.*
+
+I also configured **Linkerd as a Kubernetes service mesh**, providing **automatic mutual TLS (mTLS) for traffic between meshed services** without requiring changes to application code. Linkerd is integrated into the platform's Argo CD application hierarchy alongside the workloads and observability components.
+
 ## 4. Delivering code through CI and pull-based GitOps
 
 I built an end-to-end workflow in which **CI builds and tags Docker images with the commit SHA**, updates deployment manifests in Git, and **Argo CD pulls and synchronizes the desired state** to the cluster. Importantly, GitHub Actions runners do **not** require access to the cluster credentials to perform deployment.
 
-The documented implementation achieved a **roughly 5-minute code-to-deployment cycle**.
+The implementation achieved an **approximately 5-minute code-to-deployment cycle**.
 
 ## 5. Solving a real controller reconciliation issue
 

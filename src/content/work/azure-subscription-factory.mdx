@@ -1,14 +1,14 @@
 ---
 title: "Azure Subscription Factory"
 subtitle: "Governed Azure subscription provisioning with Terraform and GitLab CI/CD"
-description: "Built a YAML-driven Azure Subscription Factory using Terraform azurerm_subscription, MCA billing scopes, Management Groups and GitLab validate/plan/manual approval/apply stages."
+description: "Azure Subscription Factory: YAML-based requests, Terraform provisioning under MCA billing scopes, Management Groups and GitLab approval gates."
 order: 3
 color: "sky"
 facts:
   - { label: "Focus", value: "Azure infrastructure automation and governance" }
   - { label: "Provisioning model", value: "Dashboard request → YAML → Terraform module" }
   - { label: "Approval workflow", value: "Validate → plan → manual approval → apply" }
-  - { label: "Source", value: "Architecture-level case study; no internal configuration published" }
+  - { label: "Project", value: "Azure infrastructure automation · internal workflow" }
 next: "cloud-policy-guardrails"
 ---
 
@@ -16,7 +16,7 @@ next: "cloud-policy-guardrails"
 
 [![Detailed Azure Subscription Factory architecture with YAML requests, GitLab CI, Terraform and Azure billing and management hierarchy](/images/azure-factory.svg)](/images/azure-factory.svg)
 
-*Architecture illustration of the provisioning workflow. Click to inspect the full-size diagram. The drawing is illustrative, not an internal system screenshot.*
+*Architecture of the subscription request, review and provisioning flow. Select the diagram to view it full size.*
 
 ## 1. Connecting subscription requests to Terraform
 
@@ -33,12 +33,12 @@ I used **GitLab CI/CD** to orchestrate the provisioning lifecycle:
 3. **Wait for manual approval** before applying the plan.
 4. **Apply** the reviewed change using **service-principal authentication**.
 
-**The workflow does not auto-apply subscriptions just because a YAML request exists.** The manual gate is an intentional part of the design.
+The **manual approval gate** keeps subscription creation reviewable: requests are validated and planned before an approved change is applied.
 
 ## What I contributed
 
-I connected **declarative YAML requests, a dedicated Terraform provisioning module and approval-oriented GitLab automation** into a repeatable subscription-creation process. The result demonstrates practical **Infrastructure as Code, Azure governance and controlled cloud automation**, without claiming an unverified scale or speedup.
+I connected **declarative YAML requests, a dedicated Terraform provisioning module and approval-oriented GitLab automation** into a repeatable subscription-creation process. The result brings **Infrastructure as Code, Azure governance and controlled cloud automation** together in one repeatable workflow.
 
 ## Confidentiality
 
-This case study describes the verified architecture only. It does not disclose company credentials, tenant or billing identifiers, internal dashboard source code or proprietary configurations.
+*Confidentiality: this overview focuses on architecture and implementation; proprietary source, credentials and tenant details are not published.*

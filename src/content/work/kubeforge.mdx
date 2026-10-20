@@ -1,18 +1,18 @@
 ---
 title: "KubeForge"
 subtitle: "A Kubernetes self-service platform: one developer request, eight managed resources"
-description: "Designed and implemented KubeForge with Crossplane v2, Go-templated Compositions, GitHub Actions validation, Argo CD GitOps and 10/10 passing E2E tests."
+description: "KubeForge: Kubernetes self-service environments with Crossplane v2, Python PR validation, Argo CD and 10/10 passing E2E stages on a local cluster."
 order: 1
 color: "lilac"
 facts:
   - { label: "Focus", value: "Platform Engineering / Kubernetes self-service" }
   - { label: "Core stack", value: "Kubernetes, Crossplane v2, Go templating, Python, GitHub Actions, Argo CD" }
-  - { label: "Verified result", value: "8 reconciled Kubernetes resources; 10/10 E2E test stages passed" }
+  - { label: "E2E tests", value: "10/10 stages passed · 8 Kubernetes objects per environment" }
   - { label: "Source", value: "[View KubeForge on GitHub](https://github.com/chedli01/KubeForge)" }
 next: "task-manager"
 ---
 
-**I designed and implemented KubeForge**, a Kubernetes self-service platform that lets developers request an entire environment through **one declarative `DevEnvironment` YAML manifest**. Instead of having to manage namespaces, quotas, permissions and network policies individually, developers use a high-level API while Crossplane provisions and continuously reconciles the underlying infrastructure.
+**I designed and implemented KubeForge**, a locally tested Kubernetes self-service prototype for creating **logical development environments within an existing shared cluster**. Developers request an environment through a single declarative `DevEnvironment` YAML manifest; Crossplane provisions and reconciles the namespace, resource policies and access controls behind that request.
 
 [![Animated KubeForge architecture showing GitHub Actions validation, Argo CD synchronization, Crossplane reconciliation and eight Kubernetes objects](/images/kubeforge.gif)](/images/kubeforge.gif)
 
@@ -51,14 +51,14 @@ This creates a clear delivery boundary: **validate and review requests first; re
 I developed and ran a **10-stage automated E2E suite** that tests actual platform behavior—not simply YAML formatting—including:
 
 - Provisioning of all expected resources and enforcement of quotas.
-- RBAC permissions and network policy behavior.
+- RBAC authorization and generated network-policy configuration.
 - Configuration updates and correction of configuration drift.
 - Environment deletion and lifecycle cleanup.
 
-**All 10 out of 10 stages passed** in the documented execution.
+**All 10 out of 10 E2E stages passed**, tested on a local four-node kind cluster. The network-policy stages validated generated rules and reconciliation, rather than packet-level traffic isolation.
 
 ## What I contributed
 
-KubeForge brings together **Kubernetes API design, infrastructure abstraction, automated guardrails, GitOps and behavioral testing**. I owned the high-level API, Composition implementation, Python validation pipeline, Argo CD configuration and E2E verification to build a demonstrable self-service platform.
+KubeForge brings together **API design, infrastructure abstraction, automated guardrails, GitOps and behavioral testing**. I owned the high-level API, Composition implementation, Python validation pipeline, Argo CD configuration and E2E verification to build and verify a working local self-service platform prototype.
 
 **[Explore the KubeForge source code →](https://github.com/chedli01/KubeForge)**
