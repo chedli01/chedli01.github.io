@@ -64,8 +64,7 @@ work:
       src: kubeforge.gif
       alt: Animated KubeForge architecture showing GitHub pull-request validation, GitOps, Crossplane 
         reconciliation and the eight managed Kubernetes objects.
-    summary: I designed and built a Kubernetes self-service platform that turns a single DevEnvironment 
-      request into a managed environment, with automated validation, GitOps delivery and reconciliation.
+    summary: I designed and built a Kubernetes self-service platform that enables developers to provision and manage environments on a shared cluster through a single high-level YAML manifest, without handling the underlying Kubernetes resources.
     badges:
     - Crossplane v2
     - 8 managed resources
